@@ -52,4 +52,10 @@ end
         @test StableArrays.base(z) == StableArrays.base(x) / StableArrays.base(y) 
         @test log(z) ≈ log(x) - log(y)
     end
+
+    @testset "less than" begin
+        @test 50000 > StableNumber(2, 10) > 0.9
+        @test StableNumber(4, 7) > StableNumber(2, 7) > StableNumber(2, 5)
+        @test StableNumber(-7, 3) < 0
+    end
 end

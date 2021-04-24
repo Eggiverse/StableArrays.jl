@@ -107,11 +107,28 @@ function Base.:(+)(x1::StableNumber, x2::StableNumber)
     end
 end
 
+function Base.:(+)(x1::StableNumber, x2::Number)
+    x1 + StableNumber(x2, 1)
+end
+
+function Base.:(+)(x1::Number, x2::StableNumber)
+    StableNumber(x1, 1) + x2
+end
+
 function Base.:(-)(x::StableNumber)
     StableNumber(-base(x), exponent(x))
 end
 
 function Base.:(-)(x1::StableNumber, x2::StableNumber)
+    x1 + (-x2)
+end
+
+function Base.:(-)(x1::StableNumber, x2)
+    x1 + (-x2)
+end
+
+
+function Base.:(-)(x1, x2::StableNumber)
     x1 + (-x2)
 end
 
@@ -121,6 +138,21 @@ end
 
 function Base.:(/)(x1::StableNumber, x2::StableNumber)
     StableNumber(base(x1) / base(x2), exponent(x1) - exponent(x2))
+end
+
+function Base.:(<)(x1::StableNumber, x2::StableNumber)
+    xd = x1 - x2
+    base(xd) < 0
+end
+
+function Base.:(<)(x1, x2::StableNumber)
+    xd = x1 - x2
+    base(xd) < 0
+end
+
+function Base.:(<)(x1::StableNumber, x2)
+    xd = x1 - x2
+    base(xd) < 0
 end
 
 function Base.log(x::StableNumber)
