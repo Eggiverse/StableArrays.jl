@@ -159,4 +159,8 @@ function Base.log(x::StableNumber)
     log(base(x)) + exponent(x)
 end
 
+function Base.abs(x::StableNumber)
+    StableNumber(abs(base(x)), exponent(x))
+end
+
 end

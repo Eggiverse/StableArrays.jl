@@ -58,4 +58,11 @@ end
         @test StableNumber(4, 7) > StableNumber(2, 7) > StableNumber(2, 5)
         @test StableNumber(-7, 3) < 0
     end
+
+    @testset "abs" begin
+        a = StableNumber(-2,3)
+        b = abs(a)
+        @test StableArrays.base(b) == 2
+        @test StableArrays.exponent(b) == 3
+    end
 end
