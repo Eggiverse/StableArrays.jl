@@ -33,7 +33,7 @@ exponent(x::StableNumber) = x.exponent
 """
     stabilize!(x::AbstractArray)
 
-Construct a `StableArray`
+Construct a [`StableArray`](@ref)
 """
 function stabilize!(x::AbstractArray)
     factor = maximum(abs, x)
