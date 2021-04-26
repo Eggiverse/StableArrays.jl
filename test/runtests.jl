@@ -65,4 +65,11 @@ end
         @test StableArrays.base(b) == 2
         @test StableArrays.exponent(b) == 3
     end
+
+    @testset "isnan" begin
+        @test isnan(StableNumber(NaN, 8))
+        @test isnan(StableNumber(9, NaN))
+        @test isnan(StableNumber(NaN, NaN))
+        @test isnan(StableNumber(0, 8) / StableNumber(0, 2))
+    end
 end

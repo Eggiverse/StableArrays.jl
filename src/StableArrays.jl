@@ -163,4 +163,12 @@ function Base.abs(x::StableNumber)
     StableNumber(abs(base(x)), exponent(x))
 end
 
+function Base.isnan(x::StableNumber)
+    isnan(base(x)) || isnan(exponent(x))
+end
+
+function Base.show(io::IO, ::MIME"text/plain", x::StableNumber)
+    print(io, "Stabled($(base(x))×exp($(exponent(x))))")
+end
+
 end
