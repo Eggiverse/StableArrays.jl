@@ -3,7 +3,7 @@ module StableArrays
 using Base
 using LinearAlgebra
 
-export StableArray, stabilize!, unstabilize
+export StableArray, stabilize!, stabilize, unstabilize
 
 """
     StableArray(base::AbstractArray, exponent)
@@ -37,14 +37,22 @@ Construct a [`StableArray`](@ref)
 """
 function stabilize!(x::AbstractArray)
     factor = maximum(abs, x)
-    x ./= factor
-    StableArray(x, log(factor))
+    if factor == 0
+        StableArray(x, factor)
+    else
+        x ./= factor
+        StableArray(x, log(factor))
+    end
 end
 
 function stabilize(x::AbstractArray)
     factor = maximum(abs, x)
-    x /= factor
-    StableArray(x, log(factor))
+    if factor == 0
+        StableArray(x, factor)
+    else
+        x /= factor
+        StableArray(x, log(factor))
+    end
 end
 
 function unstabilize(x::StableArray)
@@ -60,6 +68,9 @@ const StableMatrix{E, A} = StableArray{E, A} where A<:AbstractMatrix
 function Base.:(*)(x1::StableArray{E}, x2::StableArray{E}) where E
     x = x1.base * x2.base
     factor = maximum(abs, x)
+    if factor == 0
+        return StableArray(x, factor)
+    end
     x ./= factor
     xexponent = x1.exponent + x2.exponent + log(convert(E, factor))
     StableArray(x, xexponent)

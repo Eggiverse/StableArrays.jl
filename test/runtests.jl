@@ -13,6 +13,13 @@ using Test
     @test cs isa StableArray
     @test maximum(abs, StableArrays.base(cs)) ≈ 1
     @test unstabilize(cs) ≈ unstabilize(as) * unstabilize(bs)
+
+    @testset "zeros" begin
+        a = zeros(4,4)
+        as = stabilize(a)
+        @test all(StableArrays.base(as) .== 0)
+        @test unstabilize(as) == a
+    end
 end
 
 @testset "StableNumber" begin
