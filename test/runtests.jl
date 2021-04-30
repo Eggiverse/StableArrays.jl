@@ -58,6 +58,10 @@ end
         @test StableArrays.exponent(z) == StableArrays.exponent(x) - StableArrays.exponent(y) 
         @test StableArrays.base(z) == StableArrays.base(x) / StableArrays.base(y) 
         @test log(z) ≈ log(x) - log(y)
+
+        z = x / 2
+        @test z isa StableNumber
+        @test log(z) ≈ log(x) - log(2)
     end
 
     @testset "less than" begin
