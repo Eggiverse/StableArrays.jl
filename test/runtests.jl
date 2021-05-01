@@ -1,5 +1,5 @@
 using StableArrays
-using StableArrays: StableNumber, unstabilize
+using StableArrays: StableNumber, unstabilize, logview
 using LinearAlgebra
 using Test
 
@@ -32,14 +32,14 @@ end
     @testset "plus" begin
         z = x + y
         @test z isa StableNumber
-        @test StableArrays.exponent(z) == StableArrays.exponent(y) 
+        @test StableArrays.exponent(z) == StableArrays.exponent(x) 
         @test unstabilize(z) ≈ unstabilize(x) + unstabilize(y)
     end
 
     @testset "minus" begin
         z = x - y
         @test z isa StableNumber
-        @test StableArrays.exponent(z) == StableArrays.exponent(y) 
+        @test StableArrays.exponent(z) == StableArrays.exponent(x) 
         @test unstabilize(z) ≈ unstabilize(x) - unstabilize(y)
     end
 
@@ -82,5 +82,10 @@ end
         @test isnan(StableNumber(9, NaN))
         @test isnan(StableNumber(NaN, NaN))
         @test isnan(StableNumber(0, 8) / StableNumber(0, 2))
+    end
+
+    @testset "logview" begin
+        a = StableNumber(-2, 3)
+        @test unstabilize(logview(a)) ≈ unstabilize(a)
     end
 end

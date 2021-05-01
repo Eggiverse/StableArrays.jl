@@ -19,7 +19,7 @@ end
 
 function Base.:(+)(x1::StableNumber, x2::StableNumber)
     indx = argmax((x1.exponent, x2.exponent))
-    if indx == 1
+    if indx == 2
         _plus_ordered(x1, x2)
     else
         _plus_ordered(x2, x1)
@@ -92,4 +92,12 @@ end
 
 function Base.show(io::IO, ::MIME"text/plain", x::StableNumber)
     print(io, "Stabled($(base(x))×exp($(exponent(x))))")
+end
+
+function Base.sign(x::StableNumber)
+    sign(base(x))
+end
+
+function logview(x::StableNumber)
+    StableNumber(sign(x), exponent(x)+log(abs(base(x))))
 end
